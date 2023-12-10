@@ -22,7 +22,7 @@ def do_pack():
     try:
         local("tar -cvzf {} web_static".format(file_tgz))
         return (file_tgz)
-    except:
+    except Keyword:
         return None
 
 
@@ -42,7 +42,7 @@ def do_deploy(archive_path):
             run('rm -rf /data/web_static/current')
             run('ln -s {} /data/web_static/current'.format(archive_folder))
             return True
-        except:
+        except Keyword:
             return False
     else:
         return False
