@@ -1,19 +1,24 @@
 #!/usr/bin/python3
+'''Use Fabric to distribute archive to web server'''
 import os.path
 from datetime import datetime
 from fabric.api import env, local, put, run
 
 env.hosts = ["54.236.45.211", "18.214.88.83"]
 
+
 def do_pack():
     dt = datetime.utcnow()
-    file = "versions/web_static_{}{}{}{}{}{}.tgz".format(dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second)
+    file = "versions/web_static_{}{}{}{}{}{}.tgz".format(
+        dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second
+    )
     if os.path.isdir("versions") is False:
         if local("mkdir -p versions").failed is True:
             return None
     if local("tar -cvzf {} web_static".format(file)).failed is True:
         return None
     return file
+
 
 def do_deploy(archive_path):
     if os.path.isfile(archive_path) is False:
@@ -40,6 +45,7 @@ def do_deploy(archive_path):
     if run("ln -s /data/web_static/releases/{}/ /data/web_static/current".format(name)).failed is True:
         return False
     return True
+
 
 def deploy():
     file = do_pack()
