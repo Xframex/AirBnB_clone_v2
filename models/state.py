@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" State Module for HBNB project """
+""" HBNB project """
 import models
 from models.city import City
 from models.place import Place
@@ -17,7 +17,7 @@ class State(BaseModel, Base):
     @property
     def cities(self):
         """
-        getter attribute cities that returns
+        getter cities that returns
         the list of City instances with state_id
         """
         list_cities = []
